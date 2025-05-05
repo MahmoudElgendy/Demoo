@@ -1,0 +1,18 @@
+# Stage 1: Build the application
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /app
+
+# Copy csproj and restore as distinct layers
+COPY Demo.Api/*.csproj ./Demo.Api/
+RUN dotnet restore ./Demo.Api/Demo.Api.csproj
+
+# Copy everything else and build
+COPY Demo.Api/. ./Demo.Api/
+WORKDIR /app/Demo.Api
+RUN dotnet publish -c Release -o out
+
+# Stage 2: Run the application
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+WORKDIR /app
+COPY --from=build /app/Demo.Api/out .
+ENTRYPOINT ["dotnet", "Demo.Api.dll"]
