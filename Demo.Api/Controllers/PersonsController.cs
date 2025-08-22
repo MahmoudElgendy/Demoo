@@ -26,8 +26,8 @@ namespace Demo.Api.Controllers
         {
             _context.Persons.Add(student);
             await _context.SaveChangesAsync();
-
-            return Ok();
+           var studentresponse = await _context.Persons.FindAsync(student.Id);
+            return Ok(studentresponse);
         }
     }
 }
