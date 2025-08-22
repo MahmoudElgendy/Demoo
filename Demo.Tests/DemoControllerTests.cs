@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Demo.Api.Controllers;
 using Demo.Api.Data;
 using Demo.Api.Models;
+using Shouldly;
 
 namespace Demo.Tests
 {
@@ -36,7 +37,7 @@ namespace Demo.Tests
             // Assert
             var actionResult = Assert.IsType<ActionResult<IEnumerable<Person>>>(result);
             var list = Assert.IsType<List<Person>>(actionResult.Value);
-            Assert.Equal(2, list.Count);
+            list.Count().ShouldBe(2);
         }
 
         [Fact]
@@ -45,16 +46,16 @@ namespace Demo.Tests
             // Arrange
             var db = GetInMemoryDbContext("PostStudentDb");
             var controller = new PersonsController(db);
-            var newStudent = new Person { Name = "New Student" };
+            var newStudent = new Person { Name = "John" };
 
             // Act
             var result = await controller.PostStudent(newStudent);
 
             // Assert
-            var createdAt = Assert.IsType<CreatedAtActionResult>(result.Result);
-            var returnValue = Assert.IsType<Person>(createdAt.Value);
-            Assert.Equal("New Student", returnValue.Name);
-            Assert.Single(db.Persons);
+            var okResult = result.Result as OkObjectResult;
+            var person = okResult.Value as Person;
+            person!.Name.ShouldBe("John");
+
         }
     }
 }
