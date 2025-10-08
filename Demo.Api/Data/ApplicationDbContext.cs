@@ -12,13 +12,8 @@ namespace Demo.Api.Data
         public DbSet<Person> Persons { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Person>()
-                .OwnsMany(p => p.Qualifications, q =>
-                {
-                    q.ToJson();
-                    q.Property(l=>l.Level)
-                    .HasConversion<string>();
-                });
+            modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
+            
 
         }
     }
