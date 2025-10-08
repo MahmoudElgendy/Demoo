@@ -24,6 +24,10 @@ namespace Demo.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<Person>> PostStudent(Person student)
         {
+            foreach (var item in student.Qualifications)
+            {
+                item.Id = Guid.NewGuid();
+            }
             _context.Persons.Add(student);
             await _context.SaveChangesAsync();
            var studentresponse = await _context.Persons.FindAsync(student.Id);

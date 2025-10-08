@@ -1,12 +1,28 @@
-using Demo.Api.Data;
+﻿using Demo.Api.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(o =>
+{
+    // keep camelCase for props (default in ASP.NET anyway)
+    o.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+
+    // ✅ read/write enums as strings
+    // Option A: preserve enum case exactly ("Expert")
+    o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+
+    // Option B (optional): if you want "expert" in JSON instead of "Expert"
+    // o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+
+    // Optional: be forgiving with casing
+    o.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+}); ;
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
