@@ -1,11 +1,13 @@
-﻿namespace Demo.Api.Models
+﻿using Demo.Api.Models.Common;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
+
+namespace Demo.Api.Models
 {
-    public class Person
+    public class Person : BaseModel<Guid>
     {
-        public Guid Id { get; set; }
         public required string Name { get; set; }
 
-        public required List<Qualification> Qualifications { get; set; }
+        public List<Qualification> Qualifications { get; set; }
     }
 
     public class Qualification
