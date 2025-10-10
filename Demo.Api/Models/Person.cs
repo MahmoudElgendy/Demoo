@@ -1,4 +1,5 @@
-﻿using Demo.Api.Models.Common.AddressSettings;
+﻿using Demo.Api.Contracts;
+using Demo.Api.Contracts.Enums;
 using Demo.Api.Models.Common.Auditing;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
@@ -19,11 +20,5 @@ namespace Demo.Api.Models
         public Level Level { get; set; }
     }
 
-    public enum Level
-    {
-        Beginner,
-        Intermediate,
-        Advanced,
-        Expert
-    }
+    
 }

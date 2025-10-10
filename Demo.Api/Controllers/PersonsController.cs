@@ -1,4 +1,6 @@
-﻿using Demo.Api.Data;
+﻿using Demo.Api.Contracts.Requests;
+using Demo.Api.Contracts.Responses;
+using Demo.Api.Data;
 using Demo.Api.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,21 +19,55 @@ namespace Demo.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Person>>> GetStudents()
+        public async Task<ActionResult<IEnumerable<PersonResponse>>> GetStudents()
         {
-            return await _context.Persons.ToListAsync();
+            return await _context.Persons
+                .AsNoTracking()
+                .Select(std=> new PersonResponse
+            {
+                Id = std.Id,
+                Name = std.Name,
+                Address = std.Address,
+                Qualifications = std.Qualifications.Select(q => new QualificationResponse
+                {
+                    Id = q.Id,
+                    Title = q.Title,
+                    Level = q.Level,
+                }).ToList() ?? new List<QualificationResponse>()
+            }).ToListAsync();
         }
         [HttpPost]
-        public async Task<ActionResult<Person>> PostStudent(Person student)
+        public async Task<ActionResult<Person>> PostStudent(PersonRequest request)
         {
-            foreach (var item in student.Qualifications)
+            var student = new Person
             {
-                item.Id = Guid.NewGuid();
-            }
+                Id = Guid.NewGuid(),
+                Name = request.Name,
+                Address = request.Address,
+                Qualifications = request.Qualifications?.Select(q => new Qualification
+                {
+                    Id = q.Id,
+                    Title = q.Title,
+                    Level = q.Level,
+                }).ToList() ?? new List<Qualification>()
+            };
+
             _context.Persons.Add(student);
             await _context.SaveChangesAsync();
-           var studentresponse = await _context.Persons.FindAsync(student.Id);
-            return Ok(studentresponse);
+            var std = await _context.Persons.FindAsync(student.Id);
+            var result = new PersonResponse
+            {
+                Id = std.Id,
+                Name = std.Name,
+                Address = std.Address,
+                Qualifications = std.Qualifications?.Select(q => new QualificationResponse
+                {
+                    Id = q.Id,
+                    Title = q.Title,
+                    Level = q.Level,
+                }).ToList() ?? new List<QualificationResponse>()
+            };
+            return Ok(result);
         }
     }
 }

@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Demo.Api.Contracts.Requests;
+using Demo.Api.Contracts.Responses;
+using Microsoft.EntityFrameworkCore;
 using NetTopologySuite.Geometries;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Demo.Api.Models.Common.AddressSettings;
+namespace Demo.Api.Contracts;
 
 [Owned]
 public class Address

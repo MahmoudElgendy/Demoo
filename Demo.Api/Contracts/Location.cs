@@ -1,5 +1,5 @@
 ﻿using NetTopologySuite.Geometries;
-namespace Demo.Api.Models.Common.AddressSettings;
+namespace Demo.Api.Contracts;
 
 // for user interface request and response
 public class Location

@@ -1,7 +1,7 @@
 ﻿using NetTopologySuite.Geometries;
 using System.ComponentModel.DataAnnotations;
 
-namespace Demo.Api.Models.Common.AddressSettings;
+namespace Demo.Api.Contracts.Requests;
 
 public class AddressRequest
 {

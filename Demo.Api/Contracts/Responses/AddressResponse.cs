@@ -1,4 +1,6 @@
-﻿namespace Demo.Api.Models.Common.AddressSettings
+﻿using Demo.Api.Contracts;
+
+namespace Demo.Api.Contracts.Responses
 {
     public class AddressResponse
     {
