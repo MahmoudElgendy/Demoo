@@ -4,11 +4,11 @@
 		"name": "Demo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "5046277",
-		"_collection_link": "https://bold-water-800410.postman.co/workspace/832c8308-ecd1-4a99-a530-84c0c9826f1d/collection/5046277-f0167b8e-ae69-4218-b56d-f5d63a12f8d3?action=share&source=collection_link&creator=5046277"
+		"_collection_link": "https://bold-water-800410.postman.co/workspace/carsties~832c8308-ecd1-4a99-a530-84c0c9826f1d/collection/5046277-f0167b8e-ae69-4218-b56d-f5d63a12f8d3?action=share&source=collection_link&creator=5046277"
 	},
 	"item": [
 		{
-			"name": "{{baseUrl}}/Persons",
+			"name": "Get Persons",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -17,7 +17,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n        \"name\": \"wwwwwwwwwwwwwwwwwwww\",\r\n        \"Qualifications\": [\r\n      {\r\n        \"title\": \"qoraan\",\r\n        \"level\":\"Expert\"\r\n      }\r\n        ]\r\n}\r\n    ",
+					"raw": "{\r\n        \"name\": \"gendi\",\r\n        \"address\": {\r\n\t\t\"addressLine1\": \"line1\",\r\n\t\t\"addressLine2\": \"\",\r\n\t\t\"city\": \"allen\",\r\n\t\t\"regionCode\": \"TX\",\r\n\t\t\"postalCode\": \"75013\",\r\n\t\t\"county\": \"Collin\",\r\n\t\t\"countryCode\": \"USA\",\r\n\t\t\"location\": {\r\n            \"latitude\": 33.0775,\r\n            \"longitude\": -96.8213\r\n\t\t}\r\n\t},\r\n        \"Qualifications\": [\r\n      {\r\n        \"title\": \"qoraan\",\r\n        \"level\":\"Expert\"\r\n      }\r\n        ]\r\n}\r\n    ",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -35,6 +35,13 @@
 				}
 			},
 			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "localUrl",
+			"value": "",
+			"type": "default"
 		}
 	]
 }
