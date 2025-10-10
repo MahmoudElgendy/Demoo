@@ -1,4 +1,5 @@
-﻿using Demo.Api.Models.Common;
+﻿using Demo.Api.Models.Common.AddressSettings;
+using Demo.Api.Models.Common.Auditing;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
 namespace Demo.Api.Models
@@ -6,6 +7,7 @@ namespace Demo.Api.Models
     public class Person : BaseModel<Guid>
     {
         public required string Name { get; set; }
+        public Address Address { get; set; }
 
         public List<Qualification> Qualifications { get; set; }
     }

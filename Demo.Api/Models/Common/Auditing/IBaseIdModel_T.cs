@@ -1,4 +1,4 @@
-﻿namespace Demo.Api.Models.Common;
+﻿namespace Demo.Api.Models.Common.Auditing;
 
 public interface IBaseIdModel<T> : ISoftDelete, ITenantData
 {

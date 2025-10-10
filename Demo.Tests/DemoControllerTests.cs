@@ -46,7 +46,7 @@ namespace Demo.Tests
             // Arrange
             var db = GetInMemoryDbContext("PostStudentDb");
             var controller = new PersonsController(db);
-            var newStudent = new Person { Name = "John" };
+            var newStudent = new Person {Id= Guid.NewGuid(), Name = "John" };
 
             // Act
             var result = await controller.PostStudent(newStudent);
