@@ -1,4 +1,4 @@
-﻿namespace Demo.Api.Models.Common.Auditing;
+﻿namespace Demo.Api.Contracts.Auditing;
 
 public interface ITenantData
 {
