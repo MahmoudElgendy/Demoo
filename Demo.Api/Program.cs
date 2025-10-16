@@ -1,4 +1,5 @@
 ﻿using Demo.Api.Data;
+using Demo.Api.Middlewares;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -28,6 +29,8 @@ builder.Services.AddControllers().AddJsonOptions(o =>
 }); ;
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<CurrentUser>();
+builder.Services.AddScoped<ICurrentUser>(sp => sp.GetRequiredService<CurrentUser>());
 
 var app = builder.Build();
 
@@ -39,7 +42,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseAuthorization();
-
+app.UseMiddleware<AuthProfileMiddleware>();
 app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {

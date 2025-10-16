@@ -1,6 +1,7 @@
 ﻿using Demo.Api.Contracts.Requests;
 using Demo.Api.Contracts.Responses;
 using Demo.Api.Data;
+using Demo.Api.Middlewares;
 using Demo.Api.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,9 +14,11 @@ namespace Demo.Api.Controllers
     public class PersonsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        public PersonsController(ApplicationDbContext context)
+        private readonly ICurrentUser _currentUser;
+        public PersonsController(ApplicationDbContext context, ICurrentUser currentUser)
         {
             _context = context;
+            _currentUser = currentUser;
         }
 
         [HttpGet]
@@ -23,18 +26,18 @@ namespace Demo.Api.Controllers
         {
             return await _context.Persons
                 .AsNoTracking()
-                .Select(std=> new PersonResponse
-            {
-                Id = std.Id,
-                Name = std.Name,
-                Address = std.Address,
-                Qualifications = std.Qualifications.Select(q => new QualificationResponse
+                .Select(std => new PersonResponse
                 {
-                    Id = q.Id,
-                    Title = q.Title,
-                    Level = q.Level,
-                }).ToList() ?? new List<QualificationResponse>()
-            }).ToListAsync();
+                    Id = std.Id,
+                    Name = std.Name,
+                    Address = std.Address,
+                    Qualifications = std.Qualifications.Select(q => new QualificationResponse
+                    {
+                        Id = q.Id,
+                        Title = q.Title,
+                        Level = q.Level,
+                    }).ToList() ?? new List<QualificationResponse>()
+                }).ToListAsync();
         }
         [HttpPost]
         public async Task<ActionResult<Person>> PostStudent(PersonRequest request)
