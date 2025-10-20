@@ -5,8 +5,8 @@ namespace Demo.Api.Middlewares
     public class AuthProfileMiddleware
     {
         private readonly RequestDelegate _next;
-        private const string TenantHeader = "MV-TenantId";
-        private const string UserHeader = "MV-UserId";
+        private const string TenantHeader = "TenantId";
+        private const string UserHeader = "UserId";
         public AuthProfileMiddleware(RequestDelegate next)
         {
             _next = next;
