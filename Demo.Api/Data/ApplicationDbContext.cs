@@ -1,6 +1,6 @@
-﻿using Demo.Api.Contracts.Auditing;
-using Demo.Api.Middlewares;
+﻿using Demo.Api.Middlewares;
 using Demo.Api.Models;
+using gendiLib.Auditing;
 using Microsoft.EntityFrameworkCore;
 
 namespace Demo.Api.Data
@@ -18,6 +18,11 @@ namespace Demo.Api.Data
         {
             _current = current;
         }
+
+        public ApplicationDbContext(DbContextOptions options) : base(options)
+        {
+        }
+
         public DbSet<Person> Persons { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

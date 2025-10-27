@@ -1,6 +1,6 @@
 ﻿using Demo.Api.Contracts;
-using Demo.Api.Contracts.Auditing;
 using Demo.Api.Contracts.Enums;
+using gendiLib.Auditing;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
 namespace Demo.Api.Models

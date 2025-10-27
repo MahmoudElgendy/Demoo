@@ -1,4 +1,4 @@
-﻿namespace Demo.Api.Contracts.Auditing;
+﻿namespace gendiLib.Auditing;
 public class BaseModel<T> : IBaseIdModel<T>, IAuditCreated<Guid>, IAuditModified<Guid>
 {
     public required T Id { get; set; }

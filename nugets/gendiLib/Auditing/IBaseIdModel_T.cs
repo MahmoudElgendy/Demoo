@@ -1,4 +1,4 @@
-﻿namespace Demo.Api.Contracts.Auditing;
+﻿namespace gendiLib.Auditing;
 
 public interface IBaseIdModel<T> : ISoftDelete, ITenantData
 {

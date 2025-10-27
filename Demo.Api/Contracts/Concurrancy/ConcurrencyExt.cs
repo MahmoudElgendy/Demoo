@@ -1,8 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
-using Demo.Api.Contracts.Auditing;
 using Demo.Api.Contracts.Exceptions;
+using gendiLib.Auditing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;

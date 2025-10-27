@@ -1,4 +1,4 @@
-namespace Demo.Api.Contracts.Auditing;
+namespace gendiLib.Auditing;
 
 public static class SystemData
 {

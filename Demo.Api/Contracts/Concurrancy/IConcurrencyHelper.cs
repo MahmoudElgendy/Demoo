@@ -1,4 +1,4 @@
-﻿using Demo.Api.Contracts.Auditing;
+﻿using gendiLib.Auditing;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 
