@@ -1,5 +1,6 @@
 ﻿using Demo.Api.Data;
 using Demo.Api.Middlewares;
+using Demo.Api.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -32,6 +33,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<CurrentUser>();
 builder.Services.AddScoped<ICurrentUser>(sp => sp.GetRequiredService<CurrentUser>());
 
+builder.Services.AddScoped<ICarService, CarService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

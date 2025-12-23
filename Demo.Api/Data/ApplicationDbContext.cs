@@ -9,21 +9,14 @@ namespace Demo.Api.Data
     {
         private readonly ICurrentUser _current;
 
-        protected ApplicationDbContext(DbContextOptions options, ICurrentUser current) : base(options)
-        {
-          
-        }
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, ICurrentUser current)
-            : base(options)
-        {
-            _current = current;
-        }
+      
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
         }
 
         public DbSet<Person> Persons { get; set; }
+        public DbSet<Car> Cars { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
