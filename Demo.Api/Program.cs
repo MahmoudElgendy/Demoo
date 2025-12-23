@@ -34,6 +34,16 @@ builder.Services.AddScoped<CurrentUser>();
 builder.Services.AddScoped<ICurrentUser>(sp => sp.GetRequiredService<CurrentUser>());
 
 builder.Services.AddScoped<ICarService, CarService>();
+builder.Services.AddScoped<ICachService, RedisCachService>();
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration =
+        builder.Configuration.GetConnectionString("Redis");
+
+    options.InstanceName = "Cars_";
+
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
