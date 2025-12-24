@@ -1,6 +1,7 @@
 ﻿using Demo.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Text.Json;
 
 namespace Demo.Api.Services
 {
@@ -15,24 +16,26 @@ namespace Demo.Api.Services
     public class CarService : ICarService
     {
         private readonly ApplicationDbContext _context;
-        private readonly ICachService _cachService;
+        private readonly ICacheService _cacheService;
+        private readonly IBackgroundTaskQueue _backgroundTaskQueue;
 
-        public CarService(ApplicationDbContext context, ICachService cachService)
+        public CarService(ApplicationDbContext context, ICacheService cachService, IBackgroundTaskQueue backgroundTaskQueue)
         {
             _context = context;
-            _cachService = cachService;
+            _cacheService = cachService;
+            _backgroundTaskQueue = backgroundTaskQueue;
         }
 
         public async Task<IEnumerable<Car>> GetAllAsync(CancellationToken cancellationToken)
         {
-            var cars = _cachService.GetDate<IEnumerable<Car>>("cars");
+            var cars = await _cacheService.GetAsync<IEnumerable<Car>>("cars");
             if (cars != null)
             {
                 return cars;
             }
             // to test cashing or retrive form db
             cars = await _context.Cars.ToListAsync(cancellationToken);
-            _cachService.SetData("cars",cars);
+            _cacheService.SetAsync("cars", cars);
             await Task.Delay(TimeSpan.FromSeconds(10));
             return cars;
         }
@@ -49,7 +52,23 @@ namespace Demo.Api.Services
             _context.Cars.Add(car);
             await _context.SaveChangesAsync(cancellationToken);
 
+            CashingCars();
+
             return car;
+        }
+
+        private void CashingCars()
+        {
+            _backgroundTaskQueue.QueueBackgroundWorkItem(async sp =>
+            {
+                var db = sp.GetRequiredService<ApplicationDbContext>();
+                var cars = await db.Cars.ToListAsync();
+                if (await _cacheService.ExistsAsync("cars"))
+                {
+                    await _cacheService.RemoveAsync("cars");
+                }
+                _cacheService.SetAsync("cars", cars);
+            });
         }
 
         public async Task<bool> UpdateAsync(Guid id, Car car, CancellationToken cancellationToken)

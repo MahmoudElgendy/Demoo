@@ -34,7 +34,10 @@ builder.Services.AddScoped<CurrentUser>();
 builder.Services.AddScoped<ICurrentUser>(sp => sp.GetRequiredService<CurrentUser>());
 
 builder.Services.AddScoped<ICarService, CarService>();
-builder.Services.AddScoped<ICachService, RedisCachService>();
+builder.Services.AddScoped<ICacheService, RedisCacheService>();
+builder.Services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
+builder.Services.AddHostedService<QueuedHostedService>();
+
 builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration =
