@@ -9,6 +9,5 @@ next step <br>
 <br><br>
 5- concurrency   OnModelCreate<br>
 6- add profile accessor <br>
-7-security (authentication & authorization) feature 2
-
+7-security (authentication & authorization) feature1
 
